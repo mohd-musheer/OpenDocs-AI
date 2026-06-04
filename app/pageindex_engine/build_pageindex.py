@@ -23,11 +23,16 @@ async def build():
 
         result = await md_to_tree(
             md_path=str(md_file),
+
             if_thinning=False,
-            if_add_node_summary="yes",
+
+            if_add_node_summary="no",
+
+            if_add_doc_description="no",
+
             if_add_node_text="yes",
-            if_add_node_id="yes",
-            if_add_doc_description="yes"
+
+            if_add_node_id="yes"
         )
 
         save_tree(

@@ -12,7 +12,19 @@ def convert_all():
         exist_ok=True
     )
 
-    for file in RAW_DIR.glob("*.json"):
+    files = list(
+        RAW_DIR.glob("*.json")
+    )
+
+    print(
+        f"Found {len(files)} raw files"
+    )
+
+    for file in files:
+
+        print(
+            f"Converting: {file.name}"
+        )
 
         with open(
             file,
@@ -23,11 +35,11 @@ def convert_all():
             data = json.load(f)
 
         md_content = f"""
-# {data['title']}
+# {data.get('title', '')}
 
-URL: {data['url']}
+URL: {data.get('url', '')}
 
-{data['content']}
+{data.get('content', '')}
 """
 
         out_file = (
@@ -43,4 +55,11 @@ URL: {data['url']}
 
             f.write(md_content)
 
-    print("Markdown created")
+    print(
+        f"Created {len(files)} markdown files"
+    )
+
+
+if __name__ == "__main__":
+
+    convert_all()

@@ -1,0 +1,48 @@
+{
+  "doc_name": "fastapi.tiangolo.com_advanced_testing-events_",
+  "line_count": 61,
+  "structure": [
+    {
+      "title": "Testing Events: lifespan and startup - shutdown - FastAPI",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# Testing Events: lifespan and startup - shutdown - FastAPI\n\nURL: https://fastapi.tiangolo.com/advanced/testing-events/\n\nTesting Events: lifespan and startup - shutdown¶\nWhen you need lifespan\nto run in your tests, you can use the TestClient\nwith a with\nstatement:\nfrom contextlib import asynccontextmanager\nfrom fastapi import FastAPI\nfrom fastapi.testclient import TestClient\nitems = {}\n@asynccontextmanager\nasync def lifespan(app: FastAPI):\nitems[\"foo\"] = {\"name\": \"Fighters\"}\nitems[\"bar\"] = {\"name\": \"Tenders\"}\nyield"
+    },
+    {
+      "title": "clean up items",
+      "node_id": "0001",
+      "line_num": 20,
+      "text": "# clean up items\nitems.clear()\napp = FastAPI(lifespan=lifespan)\n@app.get(\"/items/{item_id}\")\nasync def read_items(item_id: str):\nreturn items[item_id]\ndef test_read_items():"
+    },
+    {
+      "title": "Before the lifespan starts, \"items\" is still empty",
+      "node_id": "0002",
+      "line_num": 27,
+      "text": "# Before the lifespan starts, \"items\" is still empty\nassert items == {}\nwith TestClient(app) as client:"
+    },
+    {
+      "title": "Inside the \"with TestClient\" block, the lifespan starts and items added",
+      "node_id": "0003",
+      "line_num": 30,
+      "text": "# Inside the \"with TestClient\" block, the lifespan starts and items added\nassert items == {\"foo\": {\"name\": \"Fighters\"}, \"bar\": {\"name\": \"Tenders\"}}\nresponse = client.get(\"/items/foo\")\nassert response.status_code == 200\nassert response.json() == {\"name\": \"Fighters\"}"
+    },
+    {
+      "title": "After the requests is done, the items are still there",
+      "node_id": "0004",
+      "line_num": 35,
+      "text": "# After the requests is done, the items are still there\nassert items == {\"foo\": {\"name\": \"Fighters\"}, \"bar\": {\"name\": \"Tenders\"}}"
+    },
+    {
+      "title": "The end of the \"with TestClient\" block simulates terminating the app, so",
+      "node_id": "0005",
+      "line_num": 37,
+      "text": "# The end of the \"with TestClient\" block simulates terminating the app, so"
+    },
+    {
+      "title": "the lifespan ends and items are cleaned up",
+      "node_id": "0006",
+      "line_num": 38,
+      "text": "# the lifespan ends and items are cleaned up\nassert items == {}\nYou can read more details about the \"Running lifespan in tests in the official Starlette documentation site.\"\nFor the deprecated startup\nand shutdown\nevents, you can use the TestClient\nas follows:\nfrom fastapi import FastAPI\nfrom fastapi.testclient import TestClient\napp = FastAPI()\nitems = {}\n@app.on_event(\"startup\")\nasync def startup_event():\nitems[\"foo\"] = {\"name\": \"Fighters\"}\nitems[\"bar\"] = {\"name\": \"Tenders\"}\n@app.get(\"/items/{item_id}\")\nasync def read_items(item_id: str):\nreturn items[item_id]\ndef test_read_items():\nwith TestClient(app) as client:\nresponse = client.get(\"/items/foo\")\nassert response.status_code == 200\nassert response.json() == {\"name\": \"Fighters\"}"
+    }
+  ]
+}

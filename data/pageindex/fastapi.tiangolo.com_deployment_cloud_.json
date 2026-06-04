@@ -1,0 +1,12 @@
+{
+  "doc_name": "fastapi.tiangolo.com_deployment_cloud_",
+  "line_count": 17,
+  "structure": [
+    {
+      "title": "Deploy FastAPI on Cloud Providers - FastAPI",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# Deploy FastAPI on Cloud Providers - FastAPI\n\nURL: https://fastapi.tiangolo.com/deployment/cloud/\n\nDeploy FastAPI on Cloud Providers¶\nYou can use virtually any cloud provider to deploy your FastAPI application.\nIn most of the cases, the main cloud providers have guides to deploy FastAPI with them.\nFastAPI Cloud¶\nFastAPI Cloud is built by the same author and team behind FastAPI.\nIt streamlines the process of building, deploying, and accessing an API with minimal effort.\nIt brings the same developer experience of building apps with FastAPI to deploying them to the cloud. 🎉\nFastAPI Cloud is the primary sponsor and funding provider for the FastAPI and friends open source projects. ✨\nCloud Providers - Sponsors¶\nSome other cloud providers ✨ sponsor FastAPI ✨ too. 🙇\nYou might also want to consider them to follow their guides and try their services:"
+    }
+  ]
+}

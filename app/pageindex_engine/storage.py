@@ -39,21 +39,40 @@ def load_all_trees():
 
     trees = []
 
+    print("\nLOADING PAGEINDEX FILES")
+    print("DIRECTORY:", PAGEINDEX_DIR.absolute())
+
     if not PAGEINDEX_DIR.exists():
+        print("DIRECTORY DOES NOT EXIST")
         return trees
 
-    for file in PAGEINDEX_DIR.glob(
-        "*.json"
-    ):
+    files = list(PAGEINDEX_DIR.glob("*.json"))
 
-        with open(
-            file,
-            "r",
-            encoding="utf-8"
-        ) as f:
+    print("FILES FOUND:", len(files))
 
-            trees.append(
-                json.load(f)
+    for file in files:
+
+        try:
+
+            with open(
+                file,
+                "r",
+                encoding="utf-8"
+            ) as f:
+
+                trees.append(
+                    json.load(f)
+                )
+
+        except Exception as e:
+
+            print(
+                f"ERROR LOADING {file}: {e}"
             )
+
+    print(
+        "TREES LOADED:",
+        len(trees)
+    )
 
     return trees

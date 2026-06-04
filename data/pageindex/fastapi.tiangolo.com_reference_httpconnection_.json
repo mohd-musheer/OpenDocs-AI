@@ -1,0 +1,12 @@
+{
+  "doc_name": "fastapi.tiangolo.com_reference_httpconnection_",
+  "line_count": 38,
+  "structure": [
+    {
+      "title": "HTTPConnection class - FastAPI",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# HTTPConnection class - FastAPI\n\nURL: https://fastapi.tiangolo.com/reference/httpconnection/\n\nHTTPConnection\nclass¶\nWhen you want to define dependencies that should be compatible with both HTTP and WebSockets, you can define a parameter that takes an HTTPConnection\ninstead of a Request\nor a WebSocket\n.\nYou can import it from fastapi.requests\n:\nfrom fastapi.requests import HTTPConnection\nfastapi.requests.HTTPConnection\n¶\nHTTPConnection(scope, receive=None)\nBases: Mapping[str, Any]\n, Generic[StateT]\nA base class for incoming HTTP connections, that is used to provide\nany functionality that is common to both Request\nand WebSocket\n.\nSource code in starlette/requests.py\ndef __init__(self, scope: Scope, receive: Receive | None = None) -> None:\nassert scope[\"type\"] in (\"http\", \"websocket\")\nself.scope = scope\nurl_for\n¶\nurl_for(name, /, **path_params)\nSource code in starlette/requests.py\ndef url_for(self, name: str, /, **path_params: Any) -> URL:\nurl_path_provider: Router | Starlette | None = self.scope.get(\"router\") or self.scope.get(\"app\")\nif url_path_provider is None:\nraise RuntimeError(\"The `url_for` method can only be used inside a Starlette application or with a router.\")\nurl_path = url_path_provider.url_path_for(name, **path_params)\nreturn url_path.make_absolute_url(base_url=self.base_url)"
+    }
+  ]
+}

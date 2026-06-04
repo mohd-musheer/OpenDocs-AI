@@ -1,0 +1,72 @@
+{
+  "doc_name": "fastapi.tiangolo.com_reference_staticfiles_",
+  "line_count": 221,
+  "structure": [
+    {
+      "title": "Static Files - StaticFiles - FastAPI",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# Static Files - StaticFiles - FastAPI\n\nURL: https://fastapi.tiangolo.com/reference/staticfiles/\n\nStatic Files - StaticFiles\n¶\nYou can use the StaticFiles\nclass to serve static files, like JavaScript, CSS, images, etc.\nRead more about it in the FastAPI docs for Static Files.\nYou can import it directly from fastapi.staticfiles\n:\nfrom fastapi.staticfiles import StaticFiles\nfastapi.staticfiles.StaticFiles\n¶\nStaticFiles(\n*,\ndirectory=None,\npackages=None,\nhtml=False,\ncheck_dir=True,\nfollow_symlink=False\n)\nSource code in starlette/staticfiles.py\ndef __init__(\nself,\n*,\ndirectory: PathLike | None = None,\npackages: list[str | tuple[str, str]] | None = None,\nhtml: bool = False,\ncheck_dir: bool = True,\nfollow_symlink: bool = False,\n) -> None:\nself.directory = directory\nself.packages = packages\nself.all_directories = self.get_directories(directory, packages)\nself.html = html\nself.config_checked = False\nself.follow_symlink = follow_symlink\nif check_dir and directory is not None and not os.path.isdir(directory):\nraise RuntimeError(f\"Directory '{directory}' does not exist\")\nget_directories\n¶\nget_directories(directory=None, packages=None)\nGiven directory\nand packages\narguments, return a list of all the\ndirectories that should be used for serving static files from.\nSource code in starlette/staticfiles.py\ndef get_directories(\nself,\ndirectory: PathLike | None = None,\npackages: list[str | tuple[str, str]] | None = None,\n) -> list[PathLike]:\n\"\"\"\nGiven `directory` and `packages` arguments, return a list of all the\ndirectories that should be used for serving static files from.\n\"\"\"\ndirectories = []\nif directory is not None:\ndirectories.append(directory)\nfor package in packages or []:\nif isinstance(package, tuple):\npackage, statics_dir = package\nelse:\nstatics_dir = \"statics\"\nspec = importlib.util.find_spec(package)\nassert spec is not None, f\"Package {package!r} could not be found.\"\nassert spec.origin is not None, f\"Package {package!r} could not be found.\"\npackage_directory = os.path.normpath(os.path.join(spec.origin, \"..\", statics_dir))\nassert os.path.isdir(package_directory), (\nf\"Directory '{statics_dir!r}' in package {package!r} could not be found.\"\n)\ndirectories.append(package_directory)\nreturn directories\nget_path\n¶\nget_path(scope)\nGiven the ASGI scope, return the path\nstring to serve up,\nwith OS specific path separators, and any '..', '.' components removed.\nSource code in starlette/staticfiles.py\ndef get_path(self, scope: Scope) -> str:\n\"\"\"\nGiven the ASGI scope, return the `path` string to serve up,\nwith OS specific path separators, and any '..', '.' components removed.\n\"\"\"\nroute_path = get_route_path(scope)\nreturn os.path.normpath(os.path.join(*route_path.split(\"/\")))\nget_response\nasync\n¶\nget_response(path, scope)\nReturns an HTTP response, given the incoming path, method and request headers.\nSource code in starlette/staticfiles.py\nasync def get_response(self, path: str, scope: Scope) -> Response:\n\"\"\"\nReturns an HTTP response, given the incoming path, method and request headers.\n\"\"\"\nif scope[\"method\"] not in (\"GET\", \"HEAD\"):\nraise HTTPException(status_code=405)\ntry:\nfull_path, stat_result = await anyio.to_thread.run_sync(self.lookup_path, path)\nexcept PermissionError:\nraise HTTPException(status_code=401)\nexcept OSError as exc:"
+    },
+    {
+      "title": "Filename is too long, so it can't be a valid static file.",
+      "node_id": "0001",
+      "line_num": 107,
+      "text": "# Filename is too long, so it can't be a valid static file.\nif exc.errno == errno.ENAMETOOLONG:\nraise HTTPException(status_code=404)\nraise exc\nexcept ValueError:"
+    },
+    {
+      "title": "Null bytes or other invalid characters in the path.",
+      "node_id": "0002",
+      "line_num": 112,
+      "text": "# Null bytes or other invalid characters in the path.\nraise HTTPException(status_code=404)\nif stat_result and stat.S_ISREG(stat_result.st_mode):"
+    },
+    {
+      "title": "We have a static file to serve.",
+      "node_id": "0003",
+      "line_num": 115,
+      "text": "# We have a static file to serve.\nreturn self.file_response(full_path, stat_result, scope)\nelif stat_result and stat.S_ISDIR(stat_result.st_mode) and self.html:"
+    },
+    {
+      "title": "We're in HTML mode, and have got a directory URL.",
+      "node_id": "0004",
+      "line_num": 118,
+      "text": "# We're in HTML mode, and have got a directory URL."
+    },
+    {
+      "title": "Check if we have 'index.html' file to serve.",
+      "node_id": "0005",
+      "line_num": 119,
+      "text": "# Check if we have 'index.html' file to serve.\nindex_path = os.path.join(path, \"index.html\")\nfull_path, stat_result = await anyio.to_thread.run_sync(self.lookup_path, index_path)\nif stat_result is not None and stat.S_ISREG(stat_result.st_mode):\nif not scope[\"path\"].endswith(\"/\"):"
+    },
+    {
+      "title": "Directory URLs should redirect to always end in \"/\".",
+      "node_id": "0006",
+      "line_num": 124,
+      "text": "# Directory URLs should redirect to always end in \"/\".\nurl = URL(scope=scope)\nurl = url.replace(path=url.path + \"/\")\nreturn RedirectResponse(url=url)\nreturn self.file_response(full_path, stat_result, scope)\nif self.html:"
+    },
+    {
+      "title": "Check for '404.html' if we're in HTML mode.",
+      "node_id": "0007",
+      "line_num": 130,
+      "text": "# Check for '404.html' if we're in HTML mode.\nfull_path, stat_result = await anyio.to_thread.run_sync(self.lookup_path, \"404.html\")\nif stat_result and stat.S_ISREG(stat_result.st_mode):\nreturn FileResponse(full_path, stat_result=stat_result, status_code=404)\nraise HTTPException(status_code=404)\nlookup_path\n¶\nlookup_path(path)\nSource code in starlette/staticfiles.py\ndef lookup_path(self, path: str) -> tuple[str, os.stat_result | None]:"
+    },
+    {
+      "title": "Reject absolute paths so they cannot escape the served directory.",
+      "node_id": "0008",
+      "line_num": 140,
+      "text": "# Reject absolute paths so they cannot escape the served directory.\nif path.startswith((\"/\", \"\\\\\")):\nreturn \"\", None\nfor directory in self.all_directories:\njoined_path = os.path.join(directory, path)\nif self.follow_symlink:\nfull_path = os.path.abspath(joined_path)\ndirectory = os.path.abspath(directory)\nelse:\nfull_path = os.path.realpath(joined_path)\ndirectory = os.path.realpath(directory)\nif os.path.commonpath([full_path, directory]) != str(directory):"
+    },
+    {
+      "title": "Don't allow misbehaving clients to break out of the static files directory.",
+      "node_id": "0009",
+      "line_num": 152,
+      "text": "# Don't allow misbehaving clients to break out of the static files directory.\ncontinue\ntry:\nreturn full_path, os.stat(full_path)\nexcept (FileNotFoundError, NotADirectoryError):\ncontinue\nreturn \"\", None\nfile_response\n¶\nfile_response(\nfull_path, stat_result, scope, status_code=200\n)\nSource code in starlette/staticfiles.py\ndef file_response(\nself,\nfull_path: PathLike,\nstat_result: os.stat_result,\nscope: Scope,\nstatus_code: int = 200,\n) -> Response:\nrequest_headers = Headers(scope=scope)\nresponse = FileResponse(full_path, status_code=status_code, stat_result=stat_result)\nif self.is_not_modified(response.headers, request_headers):\nreturn NotModifiedResponse(response.headers)\nreturn response\ncheck_config\nasync\n¶\ncheck_config()\nPerform a one-off configuration check that StaticFiles is actually pointed at a directory, so that we can raise loud errors rather than just returning 404 responses.\nSource code in starlette/staticfiles.py\nasync def check_config(self) -> None:\n\"\"\"\nPerform a one-off configuration check that StaticFiles is actually\npointed at a directory, so that we can raise loud errors rather than\njust returning 404 responses.\n\"\"\"\nif self.directory is None:\nreturn\ntry:\nstat_result = await anyio.to_thread.run_sync(os.stat, self.directory)\nexcept FileNotFoundError:\nraise RuntimeError(f\"StaticFiles directory '{self.directory}' does not exist.\")\nif not (stat.S_ISDIR(stat_result.st_mode) or stat.S_ISLNK(stat_result.st_mode)):\nraise RuntimeError(f\"StaticFiles path '{self.directory}' is not a directory.\")\nis_not_modified\n¶\nis_not_modified(response_headers, request_headers)\nGiven the request and response headers, return True\nif an HTTP\n\"Not Modified\" response could be returned instead.\nSource code in starlette/staticfiles.py\ndef is_not_modified(self, response_headers: Headers, request_headers: Headers) -> bool:\n\"\"\"\nGiven the request and response headers, return `True` if an HTTP\n\"Not Modified\" response could be returned instead.\n\"\"\"\nif if_none_match := request_headers.get(\"if-none-match\"):"
+    },
+    {
+      "title": "The \"etag\" header is added by FileResponse, so it's always present.",
+      "node_id": "0010",
+      "line_num": 210,
+      "text": "# The \"etag\" header is added by FileResponse, so it's always present.\netag = response_headers[\"etag\"]\nreturn etag in [tag.strip(\" W/\") for tag in if_none_match.split(\",\")]\ntry:\nif_modified_since = parsedate(request_headers[\"if-modified-since\"])\nlast_modified = parsedate(response_headers[\"last-modified\"])\nif if_modified_since is not None and last_modified is not None and if_modified_since >= last_modified:\nreturn True\nexcept KeyError:\npass\nreturn False"
+    }
+  ]
+}

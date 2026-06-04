@@ -26,51 +26,54 @@ from app.memory.chat_memory import get_recent
 from app.memory.memory_manager import save_conversation
 
 
-def _format_docs(docs: list) -> str:
-    """
-    Convert the list of retrieved doc dicts into a plain-text block
-    that can be dropped into the LLM prompt.
-    """
+def _format_docs(docs):
+
     if not docs:
         return ""
 
-    sections: list[str] = []
+    sections = []
 
     for idx, doc in enumerate(docs, 1):
-        if not isinstance(doc, dict):
-            sections.append(str(doc))
-            continue
 
-        header_parts = []
-        if doc.get("doc_name"):
-            header_parts.append(f"Document: {doc['doc_name']}")
-        if doc.get("doc_description"):
-            header_parts.append(f"Description: {doc['doc_description']}")
+        lines = [
+            f"--- Source {idx} ---",
+            f"Document: {doc.get('doc_name','Unknown')}"
+        ]
 
-        section_lines = [f"--- Source {idx} ---"]
-        if header_parts:
-            section_lines.extend(header_parts)
+        for node in doc.get(
+            "matched_nodes",
+            []
+        ):
 
-        for node in doc.get("matched_nodes", []):
-            if not isinstance(node, dict):
-                continue
-            title = node.get("title", "")
-            # Prefer the full text; fall back to summary / prefix_summary
-            content = (
-                node.get("text")
-                or node.get("summary")
-                or node.get("prefix_summary")
-                or ""
+            title = node.get(
+                "title",
+                ""
             )
+
+            text = node.get(
+                "text",
+                ""
+            )
+
             if title:
-                section_lines.append(f"\n## {title}")
-            if content:
-                # Trim extremely long nodes to avoid blowing up the prompt
-                section_lines.append(content[:3000])
 
-        sections.append("\n".join(section_lines))
+                lines.append(
+                    f"\n## {title}"
+                )
 
-    return "\n\n".join(sections)
+            if text:
+
+                lines.append(
+                    text[:3000]
+                )
+
+        sections.append(
+            "\n".join(lines)
+        )
+
+    return "\n\n".join(
+        sections
+    )
 
 
 def ask_docs(question: str) -> str:
@@ -108,7 +111,35 @@ def ask_docs(question: str) -> str:
     print(len(docs))
 
     context = _format_docs(docs)
+    
+    print("\nMATCHED NODE COUNTS")
 
+    for doc in docs:
+
+        print(
+            doc["doc_name"],
+            len(
+                doc.get(
+                    "matched_nodes",
+                    []
+                )
+            )
+        )
+
+    print("\n" + "=" * 80)
+    print("RAW CONTEXT LENGTH")
+    print("=" * 80)
+    print(len(context))
+
+    print("\n" + "=" * 80)
+    print("RAW CONTEXT FIRST 2000")
+    print("=" * 80)
+    print(context[:2000])
+
+    print("\n" + "=" * 80)
+    print("CONTEXT SENT TO LLM")
+    print("=" * 80)
+    print(context[:5000])
     print("\n" + "=" * 80)
     print("RETRIEVED DOCS")
     print("=" * 80)
@@ -175,3 +206,5 @@ Answer:"""
     save_conversation(question, answer)
 
     return answer
+
+ 

@@ -2,7 +2,7 @@ fastapi
 uvicorn
 jinja2
 python-multipart
-
+litellm
 trafilatura
 beautifulsoup4
 requests

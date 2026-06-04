@@ -1,0 +1,12 @@
+{
+  "doc_name": "fastapi.tiangolo.com_reference_openapi_",
+  "line_count": 7,
+  "structure": [
+    {
+      "title": "OpenAPI - FastAPI",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# OpenAPI - FastAPI\n\nURL: https://fastapi.tiangolo.com/reference/openapi/\n\nOpenAPI¶ There are several utilities to handle OpenAPI. You normally don't need to use them unless you have a specific advanced use case that requires it."
+    }
+  ]
+}

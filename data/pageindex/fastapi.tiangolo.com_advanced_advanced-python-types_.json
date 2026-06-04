@@ -1,0 +1,12 @@
+{
+  "doc_name": "fastapi.tiangolo.com_advanced_advanced-python-types_",
+  "line_count": 60,
+  "structure": [
+    {
+      "title": "Advanced Python Types - FastAPI",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# Advanced Python Types - FastAPI\n\nURL: https://fastapi.tiangolo.com/advanced/advanced-python-types/\n\nAdvanced Python Types¶\nHere are some additional ideas that might be useful when working with Python types.\nUsing Union\nor Optional\n¶\nIf your code for some reason can't use |\n, for example if it's not in a type annotation but in something like response_model=\n, instead of using the vertical bar (|\n) you can use Union\nfrom typing\n.\nFor example, you could declare that something could be a str\nor None\n:\nfrom typing import Union\ndef say_hi(name: Union[str, None]):\nprint(f\"Hi {name}!\")\ntyping\nalso has a shortcut to declare that something could be None\n, with Optional\n.\nHere's a tip from my very subjective point of view:\n- 🚨 Avoid using\nOptional[SomeType]\n- Instead ✨ use\nUnion[SomeType, None]\n✨.\nBoth are equivalent and underneath they are the same, but I would recommend Union\ninstead of Optional\nbecause the word \"optional\" would seem to imply that the value is optional, and it actually means \"it can be None\n\", even if it's not optional and is still required.\nI think Union[SomeType, None]\nis more explicit about what it means.\nIt's just about the words and names. But those words can affect how you and your teammates think about the code.\nAs an example, let's take this function:\nfrom typing import Optional\ndef say_hi(name: Optional[str]):\nprint(f\"Hey {name}!\")\nThe parameter name\nis defined as Optional[str]\n, but it is not optional, you cannot call the function without the parameter:\nsay_hi() # Oh, no, this throws an error! 😱\nThe name\nparameter is still required (not optional) because it doesn't have a default value. Still, name\naccepts None\nas the value:\nsay_hi(name=None) # This works, None is valid 🎉\nThe good news is, in most cases, you will be able to simply use |\nto define unions of types:\ndef say_hi(name: str | None):\nprint(f\"Hey {name}!\")\nSo, normally you don't have to worry about names like Optional\nand Union\n. 😎"
+    }
+  ]
+}

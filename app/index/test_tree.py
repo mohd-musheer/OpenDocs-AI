@@ -1,14 +1,27 @@
-from app.index.storage import load_tree
+from app.pageindex_engine.retrieve import retrieve
+import json
 
-tree = load_tree()
+query = "How do I create middleware in FastAPI?"
 
-print("Documents:", len(tree))
+docs, confidence = retrieve(query)
 
-print("\nFirst document:\n")
+print("\nCONFIDENCE:")
+print(confidence)
 
-print(tree[0].keys())
+print("\nDOCS FOUND:")
+print(len(docs))
 
-print(tree[0]["title"])
-print(tree[0]["url"])
+for i, doc in enumerate(docs):
 
-print(tree[0]["content"][:500])
+    print("\n" + "=" * 80)
+    print(f"DOC {i+1}")
+    print("=" * 80)
+
+    print(type(doc))
+
+    print(
+        json.dumps(
+            doc,
+            indent=2
+        )[:3000]
+    )

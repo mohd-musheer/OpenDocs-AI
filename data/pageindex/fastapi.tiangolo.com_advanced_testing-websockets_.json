@@ -1,0 +1,12 @@
+{
+  "doc_name": "fastapi.tiangolo.com_advanced_testing-websockets_",
+  "line_count": 36,
+  "structure": [
+    {
+      "title": "Testing WebSockets - FastAPI",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# Testing WebSockets - FastAPI\n\nURL: https://fastapi.tiangolo.com/advanced/testing-websockets/\n\nTesting WebSockets¶\nYou can use the same TestClient\nto test WebSockets.\nFor this, you use the TestClient\nin a with\nstatement, connecting to the WebSocket:\nfrom fastapi import FastAPI\nfrom fastapi.testclient import TestClient\nfrom fastapi.websockets import WebSocket\napp = FastAPI()\n@app.get(\"/\")\nasync def read_main():\nreturn {\"msg\": \"Hello World\"}\n@app.websocket(\"/ws\")\nasync def websocket(websocket: WebSocket):\nawait websocket.accept()\nawait websocket.send_json({\"msg\": \"Hello WebSocket\"})\nawait websocket.close()\ndef test_read_main():\nclient = TestClient(app)\nresponse = client.get(\"/\")\nassert response.status_code == 200\nassert response.json() == {\"msg\": \"Hello World\"}\ndef test_websocket():\nclient = TestClient(app)\nwith client.websocket_connect(\"/ws\") as websocket:\ndata = websocket.receive_json()\nassert data == {\"msg\": \"Hello WebSocket\"}\nNote\nFor more details, check Starlette's documentation for testing WebSockets."
+    }
+  ]
+}

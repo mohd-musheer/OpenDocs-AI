@@ -1,0 +1,16 @@
+
+# Deploy FastAPI on Cloud Providers - FastAPI
+
+URL: https://fastapi.tiangolo.com/deployment/cloud/
+
+Deploy FastAPI on Cloud Providers¶
+You can use virtually any cloud provider to deploy your FastAPI application.
+In most of the cases, the main cloud providers have guides to deploy FastAPI with them.
+FastAPI Cloud¶
+FastAPI Cloud is built by the same author and team behind FastAPI.
+It streamlines the process of building, deploying, and accessing an API with minimal effort.
+It brings the same developer experience of building apps with FastAPI to deploying them to the cloud. 🎉
+FastAPI Cloud is the primary sponsor and funding provider for the FastAPI and friends open source projects. ✨
+Cloud Providers - Sponsors¶
+Some other cloud providers ✨ sponsor FastAPI ✨ too. 🙇
+You might also want to consider them to follow their guides and try their services:

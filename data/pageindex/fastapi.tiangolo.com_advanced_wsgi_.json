@@ -1,0 +1,12 @@
+{
+  "doc_name": "fastapi.tiangolo.com_advanced_wsgi_",
+  "line_count": 55,
+  "structure": [
+    {
+      "title": "Including WSGI - Flask, Django, others - FastAPI",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# Including WSGI - Flask, Django, others - FastAPI\n\nURL: https://fastapi.tiangolo.com/advanced/wsgi/\n\nIncluding WSGI - Flask, Django, others¶\nYou can mount WSGI applications as you saw with Sub Applications - Mounts, Behind a Proxy.\nFor that, you can use the WSGIMiddleware\nand use it to wrap your WSGI application, for example, Flask, Django, etc.\nUsing WSGIMiddleware\n¶\nNote\nThis requires installing a2wsgi\nfor example with pip install a2wsgi\n.\nYou need to import WSGIMiddleware\nfrom a2wsgi\n.\nThen wrap the WSGI (e.g. Flask) app with the middleware.\nAnd then mount that under a path.\nfrom a2wsgi import WSGIMiddleware\nfrom fastapi import FastAPI\nfrom flask import Flask, request\nfrom markupsafe import escape\nflask_app = Flask(__name__)\n@flask_app.route(\"/\")\ndef flask_main():\nname = request.args.get(\"name\", \"World\")\nreturn f\"Hello, {escape(name)} from Flask!\"\napp = FastAPI()\n@app.get(\"/v2\")\ndef read_main():\nreturn {\"message\": \"Hello World\"}\napp.mount(\"/v1\", WSGIMiddleware(flask_app))\nNote\nPreviously, it was recommended to use WSGIMiddleware\nfrom fastapi.middleware.wsgi\n, but it is now deprecated.\nIt’s advised to use the a2wsgi\npackage instead. The usage remains the same.\nJust ensure that you have the a2wsgi\npackage installed and import WSGIMiddleware\ncorrectly from a2wsgi\n.\nCheck it¶\nNow, every request under the path /v1/\nwill be handled by the Flask application.\nAnd the rest will be handled by FastAPI.\nIf you run it and go to http://localhost:8000/v1/ you will see the response from Flask:\nHello, World from Flask!\nAnd if you go to http://localhost:8000/v2 you will see the response from FastAPI:\n{\n\"message\": \"Hello World\"\n}"
+    }
+  ]
+}
