@@ -1,0 +1,6 @@
+trafilatura 
+beautifulsoup4
+requests
+langchain-groq
+python-dotenv
+dotenv
