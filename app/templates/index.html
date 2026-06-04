@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyContextAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <!-- Ambient background blobs -->
+  <div class="bg-layer" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="noise"></div>
+  </div>
+
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-mark">
+          <span class="logo-icon">✦</span>
+        </div>
+        <span class="logo-text">MyContext<em>AI</em></span>
+      </div>
+
+      <div class="sidebar-section">
+        <p class="sidebar-label">Status</p>
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          <span>AI Online</span>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <p class="sidebar-label">Quick Prompts</p>
+        <div class="quick-prompts" id="quickPrompts">
+          <button class="quick-btn" data-prompt="What are the key highlights of this profile?">
+            <span class="qbtn-icon">◈</span>
+            Profile highlights
+          </button>
+          <button class="quick-btn" data-prompt="What skills and expertise does this person have?">
+            <span class="qbtn-icon">◈</span>
+            Skills &amp; expertise
+          </button>
+          <button class="quick-btn" data-prompt="Summarize the work experience in this profile.">
+            <span class="qbtn-icon">◈</span>
+            Work experience
+          </button>
+          <button class="quick-btn" data-prompt="What makes this person unique or stand out?">
+            <span class="qbtn-icon">◈</span>
+            Unique strengths
+          </button>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="model-badge">
+          <span class="model-dot"></span>
+          <span>Contextual RAG</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+      <!-- TOP BAR -->
+      <header class="topbar">
+        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="topbar-title">
+          <span>Ask about the profile</span>
+        </div>
+        <div class="topbar-actions">
+          <div class="status-badge compact">
+            <span class="status-dot"></span>
+            <span>Live</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- CHAT AREA -->
+      <div class="chat-viewport" id="chatViewport">
+
+        <!-- WELCOME SCREEN -->
+        <div class="welcome-screen" id="welcomeScreen">
+          <div class="welcome-inner">
+            <div class="welcome-glyph" aria-hidden="true">✦</div>
+            <h1 class="welcome-heading">MyContext<em>AI</em></h1>
+            <p class="welcome-sub">Intelligent answers from indexed profile data.</p>
+
+            <div class="welcome-cards">
+              <div class="wcard" data-prompt="What are the key highlights of this profile?">
+                <p class="wcard-q">Profile highlights</p>
+                <p class="wcard-desc">Get a quick overview of the most important information</p>
+              </div>
+              <div class="wcard" data-prompt="What skills and expertise does this person have?">
+                <p class="wcard-q">Skills &amp; expertise</p>
+                <p class="wcard-desc">Explore technical and soft skills in depth</p>
+              </div>
+              <div class="wcard" data-prompt="Summarize the work experience in this profile.">
+                <p class="wcard-q">Work experience</p>
+                <p class="wcard-desc">Understand career trajectory and achievements</p>
+              </div>
+              <div class="wcard" data-prompt="What makes this person unique or stand out?">
+                <p class="wcard-q">Unique strengths</p>
+                <p class="wcard-desc">Discover what sets this profile apart</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MESSAGES -->
+        <div class="messages-list" id="messages"></div>
+
+      </div>
+
+      <!-- INPUT DOCK -->
+      <div class="input-dock">
+        <div class="input-shell" id="inputShell">
+          <textarea
+            id="question"
+            class="chat-input"
+            placeholder="Ask anything about the indexed profile…"
+            rows="1"
+            autocomplete="off"
+            spellcheck="true"
+          ></textarea>
+          <button class="send-btn" id="sendBtn" onclick="askQuestion()" aria-label="Send message">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M14 8L2 2l2.5 6L2 14l12-6z" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+        <p class="input-hint">Press <kbd>Enter</kbd> to send · <kbd>Shift+Enter</kbd> for new line</p>
+      </div>
+
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

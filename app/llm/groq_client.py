@@ -12,6 +12,14 @@ client = Groq(
 
 def ask_llm(prompt: str):
 
+    print("\n" + "=" * 80)
+    print("PROMPT SIZE")
+    print("=" * 80)
+
+    print(
+        f"{len(prompt)} chars"
+    )
+
     response = client.chat.completions.create(
         model=MODEL_NAME,
         temperature=0,
@@ -23,9 +31,11 @@ def ask_llm(prompt: str):
         ]
     )
 
-    return (
+    answer = (
         response
         .choices[0]
         .message
         .content
     )
+
+    return answer
