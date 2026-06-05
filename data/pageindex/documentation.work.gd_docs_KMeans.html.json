@@ -1,0 +1,12 @@
+{
+  "doc_name": "documentation.work.gd_docs_KMeans.html",
+  "line_count": 49,
+  "structure": [
+    {
+      "title": "K-Means Clustering - VectorForgeML Documentation",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# K-Means Clustering - VectorForgeML Documentation\n\nURL: https://documentation.work.gd/docs/KMeans.html\n\nAlgorithm\nK-Means Clustering\nDescription\nAn iterative unsupervised learning algorithm that partitions a dataset into K distinct, non-overlapping subgroups (clusters). Each data point belongs to the cluster with the nearest mean. The algorithm minimizes the within-cluster sum of squares (WCSS). It employs the classic Lloyd's algorithm with efficient C++ loops for distance calculation and centroid updates.\n$$ \\text{arg} \\min_S \\sum_{i=1}^k \\sum_{\\mathbf{x} \\in S_i} ||\\mathbf{x} - \\mathbf{\\mu}_i||^2 $$\nAlgorithm Workflow\nSTART\nSpecify $K$ clusters.\nINIT\nRandomly select $K$ data points as initial centroids\n$\\mu^{(0)}$.\nASSIGN\nFor every point $x_i$, find the nearest centroid $c_j$ minimizing\n$||x_i - \\mu_j||^2$.\nUPDATE\nRecalculate each centroid $\\mu_j$ as the mean of all points assigned\nto it.\nCHECK\nIf centroids have not changed (or change < epsilon), STOP.\nLOOP\nOtherwise, repeat the Assign and Update steps.\nEND\nReturn cluster labels and final centroid locations.\nImplementation Details\nImplemented in `KMeans.cpp`.\nwhile(changed && iter < max_iter) {\n// Assignment\nint c = nearest_centroid(row, centroids);\n// Update\nnew_centroids[c] += row;\ncounts[c]++;\n}\nComplexity & Optimization\nTime Complexity\nO(I * N * K * P).\nSpace Complexity\nO(K * P).\nOptimizations\nIn-place updates.\nLimitations\nLocal optima.\nUse Cases\nClustering."
+    }
+  ]
+}

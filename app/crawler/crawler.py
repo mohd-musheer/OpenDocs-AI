@@ -1,95 +1,248 @@
 import json
+import re
 from pathlib import Path
 
-from sitemap import get_urls_from_sitemap
-from extractor import extract_page
+from app.crawler.sitemap import get_urls
+from app.crawler.extractor import extract_page
 
+RAW_DIR = Path("data/raw")
 
-DATA_DIR = Path("data/raw")
+def sanitize_filename(url: str) -> str:
 
-
-def save_document(doc: dict):
-
-    DATA_DIR.mkdir(
-        parents=True,
-        exist_ok=True
-    )
 
     filename = (
-        doc["url"]
-        .replace("https://", "")
+        url.replace("https://", "")
+        .replace("http://", "")
         .replace("/", "_")
+        .replace("?", "_")
+        .replace("&", "_")
+        .replace("=", "_")
+        .replace(":", "_")
     )
 
-    filepath = DATA_DIR / f"{filename}.json"
+    filename = re.sub(
+        r'[<>:"/\\|?*]',
+        "_",
+        filename
+    )
+
+    return filename[:200]
+
+def save_page(page: dict, url: str):
+
+
+    filename = sanitize_filename(url)
+
+    out_file = (
+        RAW_DIR /
+        f"{filename}.json"
+    )
+
+    counter = 1
+
+    while out_file.exists():
+
+        out_file = (
+            RAW_DIR /
+            f"{filename}_{counter}.json"
+        )
+
+        counter += 1
 
     with open(
-        filepath,
+        out_file,
         "w",
         encoding="utf-8"
     ) as f:
 
         json.dump(
-            doc,
+            page,
             f,
             ensure_ascii=False,
             indent=2
         )
 
 
-def crawl_site(
-    sitemap_url: str,
-    limit: int | None = None
-):
+def crawl_site(source):
 
-    urls = get_urls_from_sitemap(
-        sitemap_url
+    RAW_DIR.mkdir(
+        parents=True,
+        exist_ok=True
     )
 
-    if limit:
-        urls = urls[:limit]
+    max_pages = source.get(
+        "max_pages",
+        100
+    )
+
+    urls = get_urls(source)
+
+    urls = list(
+        dict.fromkeys(urls)
+    )
+
+    urls = urls[:max_pages]
 
     print(
-        f"Found {len(urls)} URLs"
+        f"\nPROCESSING {len(urls)} URLS"
     )
 
     success = 0
+    failed = 0
+    skipped = 0
 
-    for url in urls:
+    for i, url in enumerate(
+        urls,
+        start=1
+    ):
 
         try:
 
-            document = extract_page(url)
+            print(
+                f"[{i}/{len(urls)}] {url}"
+            )
 
-            if not document:
+            page = extract_page(url)
+
+            if not page:
+
+                skipped += 1
                 continue
 
-            save_document(document)
+            content = page.get(
+                "content",
+                ""
+            )
+
+            if not content:
+
+                skipped += 1
+
+                print(
+                    "SKIPPED EMPTY PAGE"
+                )
+
+                continue
+
+            save_page(
+                page,
+                url
+            )
 
             success += 1
 
+        except Exception as e:
+
+            failed += 1
+
             print(
-                f"[{success}] {url}"
+                f"FAILED: {url}"
+            )
+
+            print(
+                f"ERROR: {str(e)}"
+            )
+
+    print(
+        "\n" + "=" * 80
+    )
+
+    print(
+        f"DONE: {source['name']}"
+    )
+
+    print(
+        f"SUCCESS : {success}"
+    )
+
+    print(
+        f"SKIPPED : {skipped}"
+    )
+
+    print(
+        f"FAILED  : {failed}"
+    )
+
+    print(
+        "=" * 80
+    )
+
+
+def crawl_all():
+
+    possible_paths = [
+
+        Path("/app/sources.json"),
+
+        Path("sources.json"),
+
+        Path("app/sources.json"),
+    ]
+
+    sources_file = None
+
+    for p in possible_paths:
+
+        if p.exists() and p.is_file():
+
+            sources_file = p
+
+            break
+
+    if sources_file is None:
+
+        raise FileNotFoundError(
+            "sources.json not found"
+        )
+
+    print(
+        f"\nUSING SOURCES FILE: {sources_file.absolute()}"
+    )
+
+    with open(
+        sources_file,
+        "r",
+        encoding="utf-8"
+    ) as f:
+
+        sources = json.load(f)
+
+    print(
+        f"\nTOTAL SOURCES: {len(sources)}"
+    )
+
+    for source in sources:
+
+        print(
+            "\n" + "=" * 80
+        )
+
+        print(
+            f"CRAWLING: {source['name']}"
+        )
+
+        print(
+            f"URL: {source['url']}"
+        )
+
+        print(
+            "=" * 80
+        )
+
+        try:
+
+            crawl_site(
+                source
             )
 
         except Exception as e:
 
             print(
-                f"ERROR: {url}"
+                f"\nFAILED SOURCE: {source['name']}"
             )
 
             print(e)
 
     print(
-        f"\nFinished: {success} pages"
+        "\nALL SOURCES FINISHED"
     )
-
-
-if __name__ == "__main__":
-
-    data = crawl_site(
-        sitemap_url=
-        "https://fastapi.tiangolo.com/sitemap.xml"
-    )
-    print(data)
-    

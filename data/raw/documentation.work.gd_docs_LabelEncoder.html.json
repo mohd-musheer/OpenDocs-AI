@@ -1,0 +1,6 @@
+{
+  "url": "https://documentation.work.gd/docs/LabelEncoder.html",
+  "title": "Label Encoder - VectorForgeML Documentation",
+  "domain": "documentation.work.gd",
+  "content": "Algorithm\nLabel Encoder\nDescription\nEncodes target labels with value between 0 and n_classes-1.\nImplementation Details\nImplemented in `encoders.R`.\nfit=function(x){\nvals <- unique(x)\nmap <<- setNames(seq_along(vals)-1, vals)\n},\ntransform=function(x){\nas.numeric(map[x])\n}\nUse Cases\nGeneral purpose."
+}

@@ -1,0 +1,13 @@
+
+# Mean Squared Error - VectorForgeML Documentation
+
+URL: https://documentation.work.gd/docs/mse.html
+
+Algorithm
+Mean Squared Error
+Description
+MSE measures the average of the squares of the errors—that is, the average squared difference between the
+estimated values and the actual value. It penalizes larger errors more severely than smaller ones.
+$$ \text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 $$
+Use Cases
+Regression Loss Function

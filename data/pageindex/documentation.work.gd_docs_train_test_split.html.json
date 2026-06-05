@@ -1,0 +1,12 @@
+{
+  "doc_name": "documentation.work.gd_docs_train_test_split.html",
+  "line_count": 24,
+  "structure": [
+    {
+      "title": "Train Test Split - VectorForgeML Documentation",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# Train Test Split - VectorForgeML Documentation\n\nURL: https://documentation.work.gd/docs/train_test_split.html\n\nAlgorithm\nTrain Test Split\nDescription\nSplit arrays or matrices into random train and test subsets.\nImplementation Details\nImplemented in `split.R`.\ntrain_test_split <- function(X,y,test_size=0.2, seed=NULL){\nif(!is.null(seed)) set.seed(seed)\nn <- nrow(X)\nidx <- sample(n)\nsplit <- max(2, floor(n*(1-test_size)))\ntrain_idx <- idx[1:split]\ntest_idx <- idx[(split+1):n]\nlist(X_train=X[train_idx,,drop=FALSE], X_test=X[test_idx,,drop=FALSE],\ny_train=y[train_idx], y_test=y[test_idx])\n}\nUse Cases\nGeneral purpose."
+    }
+  ]
+}

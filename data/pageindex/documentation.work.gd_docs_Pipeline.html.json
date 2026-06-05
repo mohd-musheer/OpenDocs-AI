@@ -1,0 +1,12 @@
+{
+  "doc_name": "documentation.work.gd_docs_Pipeline.html",
+  "line_count": 31,
+  "structure": [
+    {
+      "title": "Pipeline - VectorForgeML Documentation",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# Pipeline - VectorForgeML Documentation\n\nURL: https://documentation.work.gd/docs/Pipeline.html\n\nAlgorithm\nPipeline\nDescription\nSequentially apply a list of transforms and a final estimator.\nAlgorithm Workflow\nIterate transformer steps:\nfit_transform()\nFinal step: fit()\nImplementation Details\nImplemented in `pipeline.R`.\nfit=function(X,y){\ndata <- X\nfor(i in seq_len(n_steps)){\nstep <- steps[[i]]\nif(pipeline_is_transformer(step)){\nif(pipeline_has_method(step,\"fit_transform\")){\ndata <- step$fit_transform(data)\n} # ...\n} else if(pipeline_is_estimator(step)){\nstep$fit(data,y)\n}\n}\n}\nUse Cases\nGeneral purpose."
+    }
+  ]
+}

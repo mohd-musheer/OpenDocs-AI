@@ -1,0 +1,6 @@
+{
+  "url": "https://documentation.work.gd/docs/",
+  "title": "VectorForgeML Documentation - API Reference, Guides & 30+ Algorithm Docs",
+  "domain": "documentation.work.gd",
+  "content": "VectorForgeML Documentation\nUsage guides, API references, and examples for the VectorForgeML machine learning framework. Built on C++ for maximum performance in R.\nQuick Start Guide\nGet up and running with a simple classification pipeline in VectorForgeML.\nFirst, install VectorForgeML, then build your first pipeline:\nlibrary(VectorForgeML)\n# Load data\ndata(iris)\n# Create pipeline\npipe <- Pipeline(steps = list(\nc(\"scaler\", StandardScaler()),\nc(\"model\", SoftmaxRegression())\n))\n# Train\npipe$fit(iris[, 1:4], iris[, 5])\nAPI Reference\nExplore the available modules and algorithms in VectorForgeML."
+}

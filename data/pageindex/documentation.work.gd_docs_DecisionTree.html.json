@@ -1,0 +1,12 @@
+{
+  "doc_name": "documentation.work.gd_docs_DecisionTree.html",
+  "line_count": 33,
+  "structure": [
+    {
+      "title": "Decision Tree Regressor - VectorForgeML Documentation",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# Decision Tree Regressor - VectorForgeML Documentation\n\nURL: https://documentation.work.gd/docs/DecisionTree.html\n\nDecision Tree Regressor\nDescription\nA high-performance, recursive partitioning algorithm that constructs a regression tree by exhaustively searching for optimal splits. Unlike standard implementations, vectorForgeML's Decision Tree is built directly in C++ using raw pointers for graph construction, ensuring minimal memory overhead and cache-friendly traversal. It supports deep trees and handles continuous features with high precision. The model predicts the target value by traversing the tree from root to leaf, where each node represents a decision rule based on a single feature threshold.\nAlgorithm Workflow\nImplementation Details\nImplemented in `DecisionTree.cpp`. Recursively partitions data.\nNode* build(NumericMatrix X, NumericVector y, int depth,int maxd){\n// ... (find best split based on minimizing MSE) ...\nif(depth>=maxd || bf==-1){\nnode->value=s/n; // Leaf node: store mean\nreturn node;\n}\nnode->left=build(XL,yL,depth+1,maxd);\nnode->right=build(XR,yR,depth+1,maxd);\nreturn node;\n}\nComplexity & Optimization\nTime Complexity\nTraining: O(N * P * D). Prediction: O(D).\nSpace Complexity\nO(Nodes).\nOptimizations\nRecursive implementation with index passing.\nLimitations\nRegression only.\nUse Cases\nNon-linear regression."
+    }
+  ]
+}

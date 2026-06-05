@@ -1,0 +1,12 @@
+{
+  "doc_name": "documentation.work.gd_docs_MinMaxScaler.html",
+  "line_count": 27,
+  "structure": [
+    {
+      "title": "Min-Max Scaler - VectorForgeML Documentation",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# Min-Max Scaler - VectorForgeML Documentation\n\nURL: https://documentation.work.gd/docs/MinMaxScaler.html\n\nAlgorithm\nMin-Max Scaler\nDescription\nTransforms features by scaling each feature to a given range.\nImplementation Details\nImplemented in `scalers.R`.\ntransform=function(X){\nX <- as.matrix(X)\n(X - minv)/(maxv - minv + 1e-8)\n}\nComplexity & Optimization\nTime Complexity\nO(N * P).\nSpace Complexity\nO(P).\nOptimizations\nNone\nLimitations\nNone listed\nUse Cases\nGeneral purpose."
+    }
+  ]
+}

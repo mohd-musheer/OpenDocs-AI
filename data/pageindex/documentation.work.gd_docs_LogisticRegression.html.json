@@ -1,0 +1,12 @@
+{
+  "doc_name": "documentation.work.gd_docs_LogisticRegression.html",
+  "line_count": 53,
+  "structure": [
+    {
+      "title": "Logistic Regression - VectorForgeML Documentation",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# Logistic Regression - VectorForgeML Documentation\n\nURL: https://documentation.work.gd/docs/LogisticRegression.html\n\nAlgorithm\nLogistic Regression\nDescription\nA generalized linear model used for binary classification. It estimates the parameters of a logistic model using iterative optimization. Our implementation uses a raw C++ full-batch Gradient Descent optimizer with an inlined sigmoid activation function for maximum throughput. It handles large datasets by processing the entire batch in memory (or chunks if extended) and updates weights based on the gradient of the Log-Likelihood.\n$$ J(\\theta) = -\\frac{1}{m} \\sum_{i=1}^m [y^{(i)}\\log(h_\\theta(x^{(i)})) +\n(1-y^{(i)})\\log(1-h_\\theta(x^{(i)}))] $$\nAlgorithm Workflow\nSTART\nInitialize weight vector $\\mathbf{w}$ and bias $b$ to zeros.\nEPOCH LOOP\nIterate for a fixed set of `epochs`.\nLINEAR\nCompute linear response $z_i = \\mathbf{w}^T \\mathbf{x}_i + b$ for all\nsamples.\nACTIVATE\nApply Sigmoid function $p_i = \\frac{1}{1 + e^{-z_i}}$.\nERROR\nCompute prediction error $e_i = p_i - y_i$.\nGRADIENT\nCalculate $\\nabla w = X^T (\\hat{y} - y)$ accumulating over all\nsamples.\nUPDATE\nApply update rule $\\mathbf{w} \\leftarrow \\mathbf{w} - \\eta \\nabla w$\n(where $\\eta$ is learning rate).\nCONVERGE\nRepeat until max epochs.\nPREDICT\nReturn 1 if $p_i > 0.5$ else 0.\nImplementation Details\nImplemented in `LogisticRegression.cpp`.\nfor(int e=0; e<epochs; e++){\ndouble z = dot_product(row, coef) + intercept;\ndouble p = 1.0 / (1.0 + exp(-z));\n// Gradient update\ncoef += learning_rate * (y - p) * row;\n}\nComplexity & Optimization\nTime Complexity\nO(Epochs * N * P).\nSpace Complexity\nO(P).\nOptimizations\nSigmoid inline.\nLimitations\nLinear boundary.\nUse Cases\nBinary classification."
+    }
+  ]
+}

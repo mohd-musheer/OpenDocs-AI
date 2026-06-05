@@ -1,0 +1,12 @@
+{
+  "doc_name": "documentation.work.gd_docs_LinearRegression.html",
+  "line_count": 60,
+  "structure": [
+    {
+      "title": "Linear Regression - VectorForgeML Documentation",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# Linear Regression - VectorForgeML Documentation\n\nURL: https://documentation.work.gd/docs/LinearRegression.html\n\nAlgorithm\nLinear Regression\nDescription\nA fundamental statistical method that models the relationship between a scalar response and one or more explanatory variables using a linear predictor functions. This implementation solves the Ordinary Least Squares (OLS) problem using the Normal Equation approach. It is heavily optimized using BLAS (Basic Linear Algebra Subprograms) and LAPACK (Linear Algebra PACKage) for native hardware acceleration, making it suitable for high-performance computing tasks.\n$$ \\hat{\\beta} = (X^T X)^{-1} X^T y $$\nAlgorithm Workflow\nSTARTINPUT\nMatrix $X$ (Features) and Vector $y$ (Targets).\nVALIDATE\nCheck for row/column consistency and dimensions.\nPARALLEL MEAN\nCompute $\\bar{x}$ for each column via OpenMP SIMD reduction.\nGRAM MATRIX\nCalculate $X^TX$ using vectorized BLAS `dgemm` (Matrix-Matrix\nMutliplication).\nTARGET PROJECTION\nCalculate $X^Ty$ using BLAS `dgemv` (Matrix-Vector\nMultiplication).\nCENTERING\nAdjust $X^TX$ and $X^Ty$ using $\\bar{x}$ to effectively center the\ndata.\nSTABILIZE\nAdd a small $10^{-8}$ Ridge penalty to the diagonal for numerical\nstability.\nSOLVE\nApply LAPACK `dposv` (Cholesky Decomposition) to solve $A\\beta =\nb$.\nRECOVERY\nIf Cholesky fails (singular matrix), trigger Custom Fallback Solver\n(LU/QR).\nINTERCEPT\nCompute $\\beta_0 = \\bar{y} - \\sum (\\beta_j \\cdot \\bar{x}_j)$ derived\nfrom means.\nOUTPUT\nStore coefficients $\\beta$ and intercept $\\beta_0$.\nPREDICT\nCompute standard dot product $X_{new} \\cdot \\beta + \\beta_0$.\nImplementation Details\nImplemented in `LinearRegression.cpp` using BLAS/LAPACK.\n// Compute XtX and Xty using BLAS dgemm/dgemv\nF77_CALL(dgemm)(\"T\", \"N\", &p, &p, &n, &one, x, &n, x, ...);\n// Solve using Cholesky (dposv)\nF77_CALL(dposv)(\"L\", &n, &one, XtX, &lda, Xty, ...);\nComplexity & Optimization\nTime Complexity\nO(N * P^2).\nSpace Complexity\nO(P^2).\nOptimizations\nBLAS Level 3.\nLimitations\nAssumes linearity.\nUse Cases\nBaseline regression."
+    }
+  ]
+}

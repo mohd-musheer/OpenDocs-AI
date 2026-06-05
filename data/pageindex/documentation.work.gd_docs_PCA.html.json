@@ -1,0 +1,12 @@
+{
+  "doc_name": "documentation.work.gd_docs_PCA.html",
+  "line_count": 49,
+  "structure": [
+    {
+      "title": "Principal Component Analysis - VectorForgeML Documentation",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# Principal Component Analysis - VectorForgeML Documentation\n\nURL: https://documentation.work.gd/docs/PCA.html\n\nAlgorithm\nPrincipal Component Analysis\nDescription\nA statistical procedure that uses an orthogonal transformation to convert a set of observations of possibly correlated variables into a set of values of linearly uncorrelated variables called principal components. Our implementation focuses on numerical accuracy using the Covariance method and LAPACK's symmetric eigenvalue solver.\n$$ C = \\frac{1}{n-1}X^T X, \\quad C = V \\Lambda V^T $$\nAlgorithm Workflow\nSTART\nInput data matrix $X$.\nCENTER\nSubtract the mean of each column from the data.\nCOVARIANCE\nCompute the covariance matrix $C = \\frac{1}{N-1} X^T X$.\nEIGEN\nSolving the eigenvalue problem $C v = \\lambda v$ using LAPACK\n`dsyev`.\nSORT\nOrder eigenvalues $\\lambda$ descending and reorder eigenvectors\n$v$.\nSELECT\nChoose the top $k$ eigenvectors corresponding to the largest\neigenvalues.\nTRANSFORM\nProject $X$ onto the new subspace: $X_{new} = X \\cdot V_k$.\nEND\nReturn the transformed data and components.\nImplementation Details\nImplemented in `PCA.cpp` using LAPACK `dsyev` (Symmetric Eigen Value solver). This is numerically robust. The Covariance matrix computation is manual C++ loops.\n// Compute Covariance\n// ...\n// Eigen decomposition\nF77_CALL(dsyev)(\"V\", \"U\", &p, cov.data(), ...);\n// Select top k vectors\nComplexity & Optimization\nTime Complexity\nO(P^3).\nSpace Complexity\nO(P^2).\nOptimizations\nLAPACK dsyev.\nLimitations\nLinear.\nUse Cases\nDimensionality reduction."
+    }
+  ]
+}

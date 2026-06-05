@@ -1,0 +1,12 @@
+{
+  "doc_name": "documentation.work.gd_docs_RidgeRegression.html",
+  "line_count": 46,
+  "structure": [
+    {
+      "title": "Ridge Regression - VectorForgeML Documentation",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# Ridge Regression - VectorForgeML Documentation\n\nURL: https://documentation.work.gd/docs/RidgeRegression.html\n\nAlgorithm\nRidge Regression\nDescription\nA regularized linear regression method that solves the ill-posed problem where features are highly correlated (multicollinearity). By adding an L2 penalty to the loss function, it shrinks the coefficients towards zero, reducing model variance. Our implementation efficiently adds this penalty directly to the Gram matrix ($X^T X$) before solving, utilizing the same optimized BLAS routines as standard Linear Regression.\n$$ \\hat{\\beta}^{ridge} = (X^T X + \\lambda I)^{-1} X^T y $$\nAlgorithm Workflow\nSTART\nReceive Matrix X and Vector y.\nCOMPUTE\nCalculate the covariance/Gram matrix $A = X^T X$.\nREGULARIZE\nAdd $\\lambda$ (alpha) to the diagonal elements: $A_{ii} \\leftarrow\nA_{ii} + \\lambda$.\nRHS\nCalculate the right-hand side vector $b = X^T y$.\nSOLVE\nSolve the linear system $A \\beta = b$ using Cholesky\nDecomposition.\nFALLBACK\nIf Cholesky fails (rare), use LU Decomposition.\nEND\nReturn robust coefficients $\\beta$.\nImplementation Details\nImplemented in `RidgeRegression.cpp`.\n// Add regularization\nfor(int j=0; j<p; ++j)\nXtX[j + j*p] += alpha;\n// Solve\nF77_CALL(dposv)(...);\nComplexity & Optimization\nTime Complexity\nO(N * P^2).\nSpace Complexity\nO(P^2).\nOptimizations\nCholesky Solver.\nLimitations\nNo feature selection.\nUse Cases\nCorrelated features."
+    }
+  ]
+}

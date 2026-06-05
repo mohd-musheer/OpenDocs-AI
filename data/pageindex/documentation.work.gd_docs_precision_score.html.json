@@ -1,0 +1,12 @@
+{
+  "doc_name": "documentation.work.gd_docs_precision_score.html",
+  "line_count": 15,
+  "structure": [
+    {
+      "title": "Precision Score - VectorForgeML Documentation",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# Precision Score - VectorForgeML Documentation\n\nURL: https://documentation.work.gd/docs/precision_score.html\n\nAlgorithm\nPrecision Score\nDescription\nPrecision, or Positive Predictive Value, measures the proportion of positive identifications that were\nactually correct. It answers the question: 'Of all the classes we predicted as positive, how many were\nactually positive?' High precision relates to the low false positive rate.\n$$ \\text{Precision} = \\frac{TP}{TP + FP} $$\nUse Cases\nFraud Detection (Minimize False Positives)"
+    }
+  ]
+}

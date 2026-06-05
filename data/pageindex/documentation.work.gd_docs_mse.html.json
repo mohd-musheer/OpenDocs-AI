@@ -1,0 +1,12 @@
+{
+  "doc_name": "documentation.work.gd_docs_mse.html",
+  "line_count": 14,
+  "structure": [
+    {
+      "title": "Mean Squared Error - VectorForgeML Documentation",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# Mean Squared Error - VectorForgeML Documentation\n\nURL: https://documentation.work.gd/docs/mse.html\n\nAlgorithm\nMean Squared Error\nDescription\nMSE measures the average of the squares of the errors—that is, the average squared difference between the\nestimated values and the actual value. It penalizes larger errors more severely than smaller ones.\n$$ \\text{MSE} = \\frac{1}{n} \\sum_{i=1}^{n} (y_i - \\hat{y}_i)^2 $$\nUse Cases\nRegression Loss Function"
+    }
+  ]
+}

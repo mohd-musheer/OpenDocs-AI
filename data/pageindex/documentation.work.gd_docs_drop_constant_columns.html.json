@@ -1,0 +1,12 @@
+{
+  "doc_name": "documentation.work.gd_docs_drop_constant_columns.html",
+  "line_count": 21,
+  "structure": [
+    {
+      "title": "Drop Constant Columns - VectorForgeML Documentation",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# Drop Constant Columns - VectorForgeML Documentation\n\nURL: https://documentation.work.gd/docs/drop_constant_columns.html\n\nAlgorithm\nDrop Constant Columns\nDescription\nRemoves columns that have zero variance.\nImplementation Details\nImplemented in C++ (`LinearRegression.cpp`).\n// Check variance\nif(var < eps) {\ndropped_cols.push_back(j);\n} else {\nkeep_cols.push_back(j);\n// Copy column\n}\nUse Cases\nGeneral purpose."
+    }
+  ]
+}

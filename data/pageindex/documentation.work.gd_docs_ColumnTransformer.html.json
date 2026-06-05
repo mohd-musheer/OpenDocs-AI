@@ -1,0 +1,24 @@
+{
+  "doc_name": "documentation.work.gd_docs_ColumnTransformer.html",
+  "line_count": 24,
+  "structure": [
+    {
+      "title": "Column Transformer - VectorForgeML Documentation",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# Column Transformer - VectorForgeML Documentation\n\nURL: https://documentation.work.gd/docs/ColumnTransformer.html\n\nAlgorithm\nColumn Transformer\nDescription\nApplies transformers to columns of an array or pandas DataFrame.\nImplementation Details\nImplemented in `column_transformer.R`.\ntransform=function(df){"
+    },
+    {
+      "title": "...",
+      "node_id": "0001",
+      "line_num": 13,
+      "text": "# ...\nif(!is.null(num_pipeline) && length(num_cols) > 0L){\nparts[[length(parts)+1]] <-\nas_feature_matrix(num_pipeline$transform(df[,num_cols,drop=FALSE]))\n}"
+    },
+    {
+      "title": "... same for cat_pipeline ...",
+      "node_id": "0002",
+      "line_num": 18,
+      "text": "# ... same for cat_pipeline ...\nout <- do.call(cbind, parts)\nout\n}\nUse Cases\nGeneral purpose."
+    }
+  ]
+}

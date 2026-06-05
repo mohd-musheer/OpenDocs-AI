@@ -1,4 +1,6 @@
 import asyncio
+import shutil
+from pathlib import Path
 
 from app.crawler.crawler import crawl_all
 
@@ -12,6 +14,33 @@ from app.pageindex_engine.build_pageindex import (
 
 
 async def bootstrap():
+
+    raw_dir = Path("data/raw")
+    md_dir = Path("data/markdown")
+    pageindex_dir = Path("data/pageindex")
+
+    print("\n" + "=" * 80)
+    print("CLEARING OLD DATA")
+    print("=" * 80)
+
+    shutil.rmtree(raw_dir, ignore_errors=True)
+    shutil.rmtree(md_dir, ignore_errors=True)
+    shutil.rmtree(pageindex_dir, ignore_errors=True)
+
+    raw_dir.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    md_dir.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    pageindex_dir.mkdir(
+        parents=True,
+        exist_ok=True
+    )
 
     print("STEP 1 - Crawling")
     crawl_all()

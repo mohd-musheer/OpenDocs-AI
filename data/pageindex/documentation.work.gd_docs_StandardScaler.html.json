@@ -1,0 +1,12 @@
+{
+  "doc_name": "documentation.work.gd_docs_StandardScaler.html",
+  "line_count": 35,
+  "structure": [
+    {
+      "title": "Standard Scaler - VectorForgeML Documentation",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# Standard Scaler - VectorForgeML Documentation\n\nURL: https://documentation.work.gd/docs/StandardScaler.html\n\nAlgorithm\nStandard Scaler\nDescription\nStandardizes features by removing the mean and scaling to unit variance.\nImplementation Details\nImplemented in `scalers.R`. Uses `cpp_scale_fit_transform` for speed if available, otherwise R `scale`.\nfit=function(X){\nX <- as.matrix(X)\nif (exists(\"cpp_scale_fit_transform\", mode=\"function\")) {\nout <- cpp_scale_fit_transform(X)\nmean <<- out$mean\nsd <<- out$sd\n} else {\nmean <<- colMeans(X)\nsd <<- apply(X,2,sd)\nsd[sd==0] <<- 1\n}\n}\nComplexity & Optimization\nTime Complexity\nO(N * P).\nSpace Complexity\nO(P).\nOptimizations\nNone\nLimitations\nNone listed\nUse Cases\nGeneral purpose."
+    }
+  ]
+}

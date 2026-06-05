@@ -1,0 +1,6 @@
+{
+  "url": "https://documentation.work.gd/docs/r2_score.html",
+  "title": "R2 Score - VectorForgeML Documentation",
+  "domain": "documentation.work.gd",
+  "content": "Algorithm\nR2 Score\nDescription\nThe coefficient of determination, denoted R2, is the proportion of the variance in the dependent variable that\nis predictable from the independent variable(s).\n$$ R^2 = 1 - \\frac{\\sum (y_i - \\hat{y}_i)^2}{\\sum (y_i - \\bar{y})^2} $$\nUse Cases\nRegression Goodness-of-Fit"
+}

@@ -1,0 +1,6 @@
+{
+  "url": "https://documentation.work.gd/docs/ColumnTransformer.html",
+  "title": "Column Transformer - VectorForgeML Documentation",
+  "domain": "documentation.work.gd",
+  "content": "Algorithm\nColumn Transformer\nDescription\nApplies transformers to columns of an array or pandas DataFrame.\nImplementation Details\nImplemented in `column_transformer.R`.\ntransform=function(df){\n# ...\nif(!is.null(num_pipeline) && length(num_cols) > 0L){\nparts[[length(parts)+1]] <-\nas_feature_matrix(num_pipeline$transform(df[,num_cols,drop=FALSE]))\n}\n# ... same for cat_pipeline ...\nout <- do.call(cbind, parts)\nout\n}\nUse Cases\nGeneral purpose."
+}

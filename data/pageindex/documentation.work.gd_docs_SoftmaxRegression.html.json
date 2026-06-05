@@ -1,0 +1,12 @@
+{
+  "doc_name": "documentation.work.gd_docs_SoftmaxRegression.html",
+  "line_count": 48,
+  "structure": [
+    {
+      "title": "Softmax Regression - VectorForgeML Documentation",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# Softmax Regression - VectorForgeML Documentation\n\nURL: https://documentation.work.gd/docs/SoftmaxRegression.html\n\nAlgorithm\nSoftmax Regression\nDescription\nAn extension of Logistic Regression to multi-class problems. It models the probability that a sample belongs to a specific class k using the Softmax function. The implementation relies on the 'Log-Sum-Exp' trick to prevent numerical instability (overflow/underflow) during the exponentiation step. This is critical for stable training on datasets with unscaled features.\n$$ P(y=j|\\mathbf{x}) = \\frac{e^{\\mathbf{w}_j^T \\mathbf{x}}}{\\sum_{k=1}^K e^{\\mathbf{w}_k^T\n\\mathbf{x}}} $$\nAlgorithm Workflow\nSTART\nIdentify $K$ unique classes and initialize $W$ matrix ($P \\times\nK$).\nEPOCH LOOP\nIterate through optimization steps.\nLOGITS\nCompute raw scores $Z = XW$.\nMAX TRICK\nFind $M = \\max(Z)$ for numerical stability.\nPROBABILITIES\nCompute Softmax $P(k|x) = \\exp(Z_k - M) / \\sum \\exp(Z_j - M)$.\nLOSS GRAD\nCompute gradients $\\nabla W$ based on Cross-Entropy Loss.\nUPDATE\nAdjust weights $W \\leftarrow W - \\eta \\nabla W$.\nEND\nReturn trained weights for $K$ classes.\nImplementation Details\nImplemented in `SoftmaxRegression.cpp`.\n// Softmax with Log-Sum-Exp trick\ndouble max_z = max(logits);\ndouble sum_exp = 0;\nfor(double z : logits) sum_exp += exp(z - max_z);\nprobs[k] = exp(logits[k] - max_z) / sum_exp;\nComplexity & Optimization\nTime Complexity\nO(Epochs * N * P * K).\nSpace Complexity\nO(P * K).\nOptimizations\nLog-Sum-Exp stability.\nLimitations\nLinear boundaries.\nUse Cases\nMulticlass classification."
+    }
+  ]
+}

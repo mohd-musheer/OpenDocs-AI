@@ -1,0 +1,6 @@
+{
+  "url": "https://documentation.work.gd/docs/f1_score.html",
+  "title": "F1 Score - VectorForgeML Documentation",
+  "domain": "documentation.work.gd",
+  "content": "Algorithm\nF1 Score\nDescription\nThe F1 Score is the harmonic mean of Precision and Recall. It provides a single metric that balances both the concerns of false positives and false negatives. It is particularly useful when you need to take both Precision and Recall into account, especially if there is an uneven class distribution.\n$$ F1 = 2 \\times \\frac{\\text{Precision} \\times \\text{Recall}}{\\text{Precision} + \\text{Recall}} $$\nUse Cases\nImbalanced Datasets"
+}

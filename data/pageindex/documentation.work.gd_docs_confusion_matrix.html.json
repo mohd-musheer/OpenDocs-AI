@@ -1,0 +1,12 @@
+{
+  "doc_name": "documentation.work.gd_docs_confusion_matrix.html",
+  "line_count": 15,
+  "structure": [
+    {
+      "title": "Confusion Matrix - VectorForgeML Documentation",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# Confusion Matrix - VectorForgeML Documentation\n\nURL: https://documentation.work.gd/docs/confusion_matrix.html\n\nAlgorithm\nConfusion Matrix\nDescription\nA tabular visualization of the performance of an algorithm. Each row of the matrix represents the instances in\na predicted class, while each column represents the instances in an actual class (or vice versa). It makes it\neasy to see if the system is confusing two classes.\n\\begin{bmatrix} TP & FP \\\\ FN & TN \\end{bmatrix}\nUse Cases\nModel Debugging"
+    }
+  ]
+}

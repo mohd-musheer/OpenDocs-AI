@@ -1,0 +1,12 @@
+{
+  "doc_name": "documentation.work.gd_docs_LabelEncoder.html",
+  "line_count": 21,
+  "structure": [
+    {
+      "title": "Label Encoder - VectorForgeML Documentation",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# Label Encoder - VectorForgeML Documentation\n\nURL: https://documentation.work.gd/docs/LabelEncoder.html\n\nAlgorithm\nLabel Encoder\nDescription\nEncodes target labels with value between 0 and n_classes-1.\nImplementation Details\nImplemented in `encoders.R`.\nfit=function(x){\nvals <- unique(x)\nmap <<- setNames(seq_along(vals)-1, vals)\n},\ntransform=function(x){\nas.numeric(map[x])\n}\nUse Cases\nGeneral purpose."
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "url": "https://documentation.work.gd/docs/OneHotEncoder.html",
+  "title": "One Hot Encoder - VectorForgeML Documentation",
+  "domain": "documentation.work.gd",
+  "content": "Algorithm\nOne Hot Encoder\nDescription\nEncodes categorical features as a one-hot numeric array.\nImplementation Details\nImplemented in `encoders.R`.\ntransform=function(df){\n# ... setup code ...\nfor(colname in names(df)){\ncol <- as.character(df[[colname]])\ncats <- categories[[colname]]\nidx <- match(col, cats)\n# ... fill matrix ...\nout[cbind(row_ids, col_ids)] <- 1L\n}\nout\n}\nUse Cases\nGeneral purpose."
+}

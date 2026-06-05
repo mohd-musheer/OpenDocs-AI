@@ -1,0 +1,24 @@
+{
+  "doc_name": "documentation.work.gd_docs_OneHotEncoder.html",
+  "line_count": 25,
+  "structure": [
+    {
+      "title": "One Hot Encoder - VectorForgeML Documentation",
+      "node_id": "0000",
+      "line_num": 2,
+      "text": "# One Hot Encoder - VectorForgeML Documentation\n\nURL: https://documentation.work.gd/docs/OneHotEncoder.html\n\nAlgorithm\nOne Hot Encoder\nDescription\nEncodes categorical features as a one-hot numeric array.\nImplementation Details\nImplemented in `encoders.R`.\ntransform=function(df){"
+    },
+    {
+      "title": "... setup code ...",
+      "node_id": "0001",
+      "line_num": 13,
+      "text": "# ... setup code ...\nfor(colname in names(df)){\ncol <- as.character(df[[colname]])\ncats <- categories[[colname]]\nidx <- match(col, cats)"
+    },
+    {
+      "title": "... fill matrix ...",
+      "node_id": "0002",
+      "line_num": 18,
+      "text": "# ... fill matrix ...\nout[cbind(row_ids, col_ids)] <- 1L\n}\nout\n}\nUse Cases\nGeneral purpose."
+    }
+  ]
+}
